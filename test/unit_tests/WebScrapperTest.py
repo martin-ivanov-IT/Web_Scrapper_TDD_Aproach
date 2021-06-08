@@ -10,11 +10,13 @@ def webScrapperDemo():
     ws.makeDataDictionary()
     return ws
 
+
 @pytest.fixture()
 def localMainPageSoup():
-    with open("C:\\example.html") as fp:
-        soup = BeautifulSoup(fp, 'lxml')
+    with open("mainPageHTML.html", encoding='ISO-8859-1') as fp:
+        soup = BeautifulSoup(fp, "html.parser")
         return soup
+
 
 def test_WebScrapperClass(webScrapperDemo):
     assert isinstance(webScrapperDemo, WebScrapper)
@@ -34,3 +36,7 @@ def test_wrong_url():
 
     with pytest.raises(requests.exceptions.ConnectionError):
         ws.makeDataDictionary()
+
+
+def test_main_Page_soup(localMainPageSoup, webScrapperDemo):
+    assert localMainPageSoup.text != webScrapperDemo.dataDictionary["soup"].text
