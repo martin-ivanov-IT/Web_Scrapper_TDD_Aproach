@@ -45,9 +45,9 @@ def test_main_Page_soup(localMainPageSoup, webScrapperDemo):
     ws.makeDataDictionary()
     assert webScrapperDemo.soup.text == ws.soup.text
 
-def test_get_articles_urls(webScrapperDemo):
-    articlesUrlsTest = webScrapperDemo.soup.find_all('a', class_='more-link')[:3]
-    print(len(articlesUrlsTest))
+
+def test_get_articles_urls(webScrapperDemo, localMainPageSoup):
+    articlesUrlsTest = localMainPageSoup.find_all('a', class_='more-link')[:3]
     ws = WebScrapper("https://blog.bozho.net/")
     ws.makeDataDictionary()
     articlesUrls = ws.get_articles_urls(atr='a', classAtr='more-link', articlesNeeded=3)
