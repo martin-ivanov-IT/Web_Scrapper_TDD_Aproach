@@ -14,14 +14,18 @@ class WebScrapper:
         self.soup = soup
 
     def get_articles_urls(self, atr, classAtr, articlesNeeded):
-        return self.soup.find_all(atr, class_=classAtr)[:articlesNeeded]
+        list = self.soup.find_all(atr, class_=classAtr)[:articlesNeeded]
+        urls = [el["href"] for el in list]
+        return urls
 
     def get_content(self, atr, classAtr):
-        text = self.soup.find(atr, class_=classAtr).get_text()
-        lines = (line.strip() for line in text.splitlines())
-        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
-        text = '\n'.join(chunk for chunk in chunks if chunk)
-        return text
+        text = self.soup.find(atr, class_=classAtr)
+        str = ""
+        for x in text:
+            if x == 'p' or x == 'ul':
+                str += x.text
+
+        return str
 
     def get_title(self, atr):
         title = self.soup.find(atr).text

@@ -13,16 +13,14 @@ with codecs.open(FILENAME, "w", ENCODING) as fp:
     writer = csv.writer(fp)
     web_scrapper.makeSoup()
     articlesUrls = web_scrapper.get_articles_urls('a', 'more-link', 3)
-
     for article in articlesUrls:
-        currUrl = article['href']
-        currWS = WebScrapper(currUrl)
+        currWS = WebScrapper(article)
         currWS.makeSoup()
         title = currWS.get_title('h1')
-        content = currWS.get_content('div', 'post-content')
+        content = currWS.get_content('div', 'entry-content clearfix')
         date = currWS.get_date('time', 'entry-date published updated')
         print(title.upper())
-        print(article['href'])
+        print(article)
         print(content)
         print(date)
         writer.writerow([title, date, content])
@@ -32,5 +30,4 @@ print("-----------")
 with codecs.open(FILENAME, "r", ENCODING) as fp:
     csv_reader = csv.reader(fp)
     for row in csv_reader:
-        # row variable is a list that represents a row in csv
         print(row)
