@@ -14,13 +14,6 @@ def dataFormatterDemo():
     return df
 
 
-@pytest.fixture()
-def extractedFirstRow():
-    with codecs.open("firtArticleExtracted.csv", "r", 'utf-8') as fp:
-        csv_reader = csv.reader(fp)
-        return next(csv_reader)
-
-
 def test_DataFormatterClass(dataFormatterDemo):
     assert isinstance(dataFormatterDemo, DataFormatter)
 
@@ -38,11 +31,3 @@ def test_wrong_url():
         ws.fetchHtml()
 
 
-def test_writeRowToCSV(dataFormatterDemo, extractedFirstRow):
-    with codecs.open("testWriter.csv", "w", "utf-8") as fp:
-        writer = csv.writer(fp)
-        dataFormatterDemo.writeRowToCSV(writer, "test_title", "test_date", "test_content")
-    fp.close()
-    with codecs.open("testWriter.csv", "r", "utf-8") as fp:
-        csv_reader = csv.reader(fp)
-        assert collections.Counter(next(csv_reader)) == collections.Counter(extractedFirstRow)
