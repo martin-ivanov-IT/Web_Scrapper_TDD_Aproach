@@ -19,13 +19,8 @@ class WebScrapper:
         return urls
 
     def get_content(self, atr, classAtr):
-        text = self.soup.find(atr, class_=classAtr)
-        str = ""
-        for x in text:
-            if x == 'p' or x == 'ul':
-                str += x.text
-
-        return str
+        text = self.soup.find(atr, class_=classAtr).get_text()
+        return text
 
     def get_title(self, atr):
         title = self.soup.find(atr).text
@@ -34,3 +29,7 @@ class WebScrapper:
     def get_date(self, atr, classAtr):
         date = self.soup.find(atr, class_=classAtr).text
         return date
+
+    def delete_elements_by_class(self, atr, classAtt):
+        for div in self.soup.find_all(atr, class_=classAtt):
+            div.decompose()

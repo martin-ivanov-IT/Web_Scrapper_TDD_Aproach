@@ -4,7 +4,6 @@ import csv
 
 class DataFormatter:
     def __init__(self, url):
-        self.writer = None
         self.html = None
         self.url = url
 
@@ -14,11 +13,3 @@ class DataFormatter:
             return None
         self.html = html
         return html.text
-
-    def writeRowToCSV(self, writer, title, date, content):
-        writer.writerow([title, date, content])
-
-    def initCSVWriter(self, fp):
-        writer = csv.writer(fp)
-        self.writer = writer
-        return writer
