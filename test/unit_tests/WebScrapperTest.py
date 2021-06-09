@@ -62,14 +62,14 @@ def test_get_content(localFirstArticleSoup):
 
 
 def test_get_title(localFirstArticleSoup):
-    title = localFirstArticleSoup.find('h1').text
+    title = "Какво ще се промени с нови избори?"
     ws = WebScrapper("https://blog.bozho.net/blog/3733")
     ws.makeSoup()
     assert title == ws.get_title('h1')
 
 
 def test_get_date(localFirstArticleSoup):
-    date = localFirstArticleSoup.find("time", class_="entry-date published updated").text
+    date = "05.05.2021"
     ws = WebScrapper("https://blog.bozho.net/blog/3733")
     ws.makeSoup()
     assert date == ws.get_date("time", "entry-date published updated")

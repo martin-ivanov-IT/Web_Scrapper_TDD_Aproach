@@ -8,7 +8,8 @@ class WebScrapper:
         self.soup = None
 
     def makeSoup(self):
-        html = DataFormatter.fetchHtml(self.url)
+        df = DataFormatter(self.url)
+        html = df.fetchHtml()
         soup = BeautifulSoup(html, "lxml")
         self.soup = soup
 

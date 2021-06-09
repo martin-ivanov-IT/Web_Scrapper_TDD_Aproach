@@ -9,17 +9,18 @@ FILENAME = "test.csv"
 ENCODING = 'utf-16'
 
 with codecs.open(FILENAME, "w", ENCODING) as fp:
-    web_scrapper = WebScrapper()
+    web_scrapper = WebScrapper("https://blog.bozho.net/")
     writer = csv.writer(fp)
-    soup = web_scrapper.get_soup("https://www.travelsmart.bg//")
-    articlesUrls = web_scrapper.get_articles_urls(soup, 'a', 'fusion-read-more', 20)
+    web_scrapper.makeSoup()
+    articlesUrls = web_scrapper.get_articles_urls('a', 'more-link', 3)
 
     for article in articlesUrls:
         currUrl = article['href']
-        articleSoup = web_scrapper.get_soup(currUrl)
-        title = web_scrapper.get_title(articleSoup, 'h1')
-        content = web_scrapper.get_content(articleSoup, 'div', 'fusion-text fusion-text-1')
-        date = web_scrapper.get_date(articleSoup, 'span', 'updated rich-snippet-hidden')
+        currWS = WebScrapper(currUrl)
+        currWS.makeSoup()
+        title = currWS.get_title('h1')
+        content = currWS.get_content('div', 'post-content')
+        date = currWS.get_date('time', 'entry-date published updated')
         print(title.upper())
         print(article['href'])
         print(content)
