@@ -14,8 +14,8 @@ class WebScrapper:
         self.soup = soup
 
     def get_articles_urls(self, atr, classAtr, articlesNeeded):
-        list = self.soup.find_all(atr, class_=classAtr)[:articlesNeeded]
-        urls = [el["href"] for el in list]
+        lis = self.soup.find_all(atr, class_=classAtr)[:articlesNeeded]
+        urls = [el["href"] for el in lis]
         return urls
 
     def get_content(self, atr, classAtr):

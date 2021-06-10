@@ -9,7 +9,5 @@ class DataFormatter:
 
     def fetchHtml(self):
         html = requests.get(self.url)
-        if html.status_code == 404:
-            return None
         self.html = html
         return html.text

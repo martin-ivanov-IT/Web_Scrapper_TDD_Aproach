@@ -6,30 +6,47 @@ import csv
 import codecs
 
 
-FILENAME = "test.csv"
-ENCODING = 'utf-16'
+def main():  # pragma: no cover
+    FILENAME = "data.csv"
+    ENCODING = 'utf-16'
+    articlesNeeded = 20
+    page = 1
 
-with codecs.open(FILENAME, "w", ENCODING) as fp:
-    web_scrapper = WebScrapper("https://blog.bozho.net/")
-    writer = Writer(fp)
-    web_scrapper.makeSoup()
-    articlesUrls = web_scrapper.get_articles_urls('a', 'more-link', 1)
-    for article in articlesUrls:
-        currWS = WebScrapper(article)
-        currWS.makeSoup()
-        currWS.delete_elements_by_class("div", 'swp_social_panel')
-        title = currWS.get_title('h1')
-        content = currWS.get_content('div', 'entry-content clearfix')
-        date = currWS.get_date('time', 'entry-date published updated')
-        print(title.upper())
-        print(article)
-        print(content)
-        print(date)
-        writer.writeRowToFile(title, date, content)
-fp.close()
+    with codecs.open(FILENAME, "w", ENCODING) as fp:
+        if fp.closed:
+            return 1
+        writer = Writer(fp)
+        articlesUrls = []
+        while len(articlesUrls) < articlesNeeded:
+            web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
+            web_scrapper.makeSoup()
+            articlesNeeded = articlesNeeded - len(articlesUrls)
+            lis = web_scrapper.get_articles_urls('a', 'more-link', articlesNeeded)
+            articlesUrls.extend(lis)
+            page += 1
 
-print("-----------")
-with codecs.open(FILENAME, "r", ENCODING) as fp:
-    csv_reader = csv.reader(fp)
-    for row in csv_reader:
-        print(row)
+        for article in articlesUrls:
+            currWS = WebScrapper(article)
+            currWS.makeSoup()
+            currWS.delete_elements_by_class("div", 'swp_social_panel')
+            title = currWS.get_title('h1')
+            content = currWS.get_content('div', 'entry-content clearfix')
+            date = currWS.get_date('time', 'entry-date published updated')
+            print(title.upper())
+            print(article)
+            print(content)
+            print(date)
+            writer.writeRowToFile(title, date, content)
+
+    fp.close()
+
+    print("-----------")
+    with codecs.open(FILENAME, "r", ENCODING) as fp:
+        csv_reader = csv.reader(fp)
+        for row in csv_reader:
+            print(row)
+    return 0
+
+
+if __name__ == "__main__":
+    main()

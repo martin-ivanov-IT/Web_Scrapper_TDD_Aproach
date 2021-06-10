@@ -16,11 +16,11 @@ def dataFormatterDemo():
 
 def test_DataFormatterClass(dataFormatterDemo):
     assert isinstance(dataFormatterDemo, DataFormatter)
+    assert isinstance(dataFormatterDemo.url, str)
 
 
 def test_fetchHtml(dataFormatterDemo):
     assert isinstance(dataFormatterDemo.html, requests.Response)
-    assert dataFormatterDemo.html
 
 
 def test_wrong_url():

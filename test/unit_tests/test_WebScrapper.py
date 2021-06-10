@@ -14,12 +14,13 @@ def webScrapperDemo():
 def webFirstArticle():
     ws = WebScrapper("https://blog.bozho.net/blog/3733")
     ws.makeSoup()
+    ws.delete_elements_by_class("div", 'swp_social_panel')
     return ws
 
 
 @pytest.fixture()
 def localMainPageSoup():
-    with open("mainPageHTML.html", encoding='utf-8') as fp:
+    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/mainPageHTML.html", encoding='utf-8') as fp:
         contents = fp.read()
         soup = BeautifulSoup(contents, "lxml")
         return soup
@@ -27,9 +28,11 @@ def localMainPageSoup():
 
 @pytest.fixture()
 def localFirstArticleSoup():
-    with open("firstArticleHTML.html", encoding='utf-8') as fp:
+    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/firstArticleHTML.html", encoding='utf-8') as fp:
         contents = fp.read()
         soup = BeautifulSoup(contents, "lxml")
+        for div in soup.find_all("div", class_="swp_social_panel"):
+            div.decompose()
         return soup
 
 
