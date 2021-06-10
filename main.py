@@ -21,21 +21,17 @@ def main():  # pragma: no cover
             web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
             web_scrapper.makeSoup()
             articlesNeeded = articlesNeeded - len(articlesUrls)
-            lis = web_scrapper.get_articles_urls('a', 'more-link', articlesNeeded)
+            lis = web_scrapper.get_articles_urls("a", "more-link", articlesNeeded)
             articlesUrls.extend(lis)
             page += 1
 
         for article in articlesUrls:
             currWS = WebScrapper(article)
             currWS.makeSoup()
-            currWS.delete_elements_by_class("div", 'swp_social_panel')
-            title = currWS.get_title('h1')
-            content = currWS.get_content('div', 'entry-content clearfix')
-            date = currWS.get_date('time', 'entry-date published updated')
-            print(title.upper())
-            print(article)
-            print(content)
-            print(date)
+            currWS.delete_elements_by_class("div", "swp_social_panel")
+            title = currWS.get_title("h1")
+            content = currWS.get_content("div", "entry-content clearfix")
+            date = currWS.get_date("time", "entry-date published updated")
             writer.writeRowToFile(title, date, content)
 
     fp.close()

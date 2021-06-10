@@ -20,7 +20,7 @@ def webFirstArticle():
 
 @pytest.fixture()
 def localFirstArticleSoup():
-    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/firstArticleHTML.html", encoding='utf-8') as fp:
+    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/firstArticleHTML.html", encoding="utf-8") as fp:
         contents = fp.read()
         soup = BeautifulSoup(contents, "lxml")
         for div in soup.find_all("div", class_="swp_social_panel"):
