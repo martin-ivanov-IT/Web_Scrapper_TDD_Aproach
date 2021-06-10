@@ -19,14 +19,6 @@ def webFirstArticle():
 
 
 @pytest.fixture()
-def localMainPageSoup():
-    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/mainPageHTML.html", encoding='utf-8') as fp:
-        contents = fp.read()
-        soup = BeautifulSoup(contents, "lxml")
-        return soup
-
-
-@pytest.fixture()
 def localFirstArticleSoup():
     with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/firstArticleHTML.html", encoding='utf-8') as fp:
         contents = fp.read()
@@ -51,7 +43,7 @@ def test_make_soup(webScrapperDemo):
     assert isinstance(webScrapperDemo.soup, BeautifulSoup)
 
 
-def test_main_Page_soup(localMainPageSoup, webScrapperDemo):
+def test_main_Page_soup( webScrapperDemo):
     ws = WebScrapper("https://blog.bozho.net/")
     ws.makeSoup()
     assert webScrapperDemo.soup.text == ws.soup.text

@@ -15,7 +15,7 @@ def writerDemo():
 
 @pytest.fixture()
 def extractedFirstRow():
-    with codecs.open("H:/Python/PyTest/Demo/test/unit_tests/test_files/testRaadFile.csv", "r", 'utf-16') as fp:
+    with codecs.open("H:/Python/PyTest/Demo/test/unit_tests/test_files/testRaadFile.csv", "r", 'utf-8') as fp:
         csv_reader = csv.reader(fp)
         return next(csv_reader)
 
