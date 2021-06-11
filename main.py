@@ -32,6 +32,9 @@ def main():  # pragma: no cover
             title = currWS.get_title("h1")
             content = currWS.get_content("div", "entry-content clearfix")
             date = currWS.get_date("time", "entry-date published updated")
+            print(title)
+            print(date)
+            print(content)
             writer.writeRowToFile(title, date, content)
 
     fp.close()
