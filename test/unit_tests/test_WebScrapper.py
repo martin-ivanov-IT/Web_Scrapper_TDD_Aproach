@@ -21,23 +21,13 @@ def webFirstArticle():
 
 
 @pytest.fixture()
-def localFirstArticleSoup():
-    with open("H:/Python/PyTest/Demo/test/unit_tests/test_files/firstArticleHTML.html", encoding="utf-8") as fp:
-        contents = fp.read()
-        soup = BeautifulSoup(contents, "lxml")
-        for div in soup.find_all("div", class_="swp_social_panel"):
-            div.decompose()
-        return soup
-
-
-@pytest.fixture()
 def urls_list():
     urlsList = ["https://blog.bozho.net/blog/3733", "https://blog.bozho.net/blog/3728",
                 "https://blog.bozho.net/blog/3722"]
     return urlsList
 
 
-@pytest.fixture(webFirstArticle)
+@pytest.fixture()
 def article_obj():
     title = webFirstArticle.get_title("h1")
     content = webFirstArticle.get_content("div", "entry-content clearfix")
