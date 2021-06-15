@@ -2,17 +2,19 @@ import argparse
 import module  # This will not link correctly if you use from imports
 from module.web_scraper import WebScrapper
 from module.writer import Writer
+from module.Article import Article
+from bs4 import BeautifulSoup
 import csv
 import codecs
 
 
 def main():  # pragma: no cover
-    FILENAME = "data.csv"
+    FILENAME = "data.json"
     ENCODING = 'utf-16'
     articlesNeeded = 20
     page = 1
 
-    with codecs.open(FILENAME, "w", ENCODING) as fp:
+    with codecs.open(FILENAME, "w+", ENCODING) as fp:
         if fp.closed:
             return 1
         writer = Writer(fp)
@@ -25,6 +27,7 @@ def main():  # pragma: no cover
             articlesUrls.extend(lis)
             page += 1
 
+        articlesLis = []
         for article in articlesUrls:
             currWS = WebScrapper(article)
             currWS.makeSoup()
@@ -32,18 +35,18 @@ def main():  # pragma: no cover
             title = currWS.get_title("h1")
             content = currWS.get_content("div", "entry-content clearfix")
             date = currWS.get_date("time", "entry-date published updated")
-            print(title)
-            print(date)
-            print(content)
-            writer.writeRowToFile(title, date, content)
+            cms = currWS.get_comments()
+            currArticle = Article(title, date, content, cms)
+            currArticle.set_content_to_first_three_paragraphs()
+            currArticle.set_most_used_words()
+
+            articlesLis.append(currArticle)
+
+        writer.writeRowToFile(articlesLis)
 
     fp.close()
 
     print("-----------")
-    with codecs.open(FILENAME, "r", ENCODING) as fp:
-        csv_reader = csv.reader(fp)
-        for row in csv_reader:
-            print(row)
     return 0
 
 

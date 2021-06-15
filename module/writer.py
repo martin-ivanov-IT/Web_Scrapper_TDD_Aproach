@@ -1,9 +1,12 @@
-import csv
+import json
 
 
 class Writer:
     def __init__(self, fp):
-        self.writer = csv.writer(fp)
+        self.fp = fp
 
-    def writeRowToFile(self, title, date, content):
-        self.writer.writerow([title, date, content])
+    def writeRowToFile(self, articles):
+        json_string = json.dumps([ob.__dict__ for ob in articles], ensure_ascii=False, indent=4)
+        # print(json_string)
+        self.fp.write(json_string)
+

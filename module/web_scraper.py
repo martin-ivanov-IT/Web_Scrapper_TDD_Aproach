@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 from module.data_formatter import DataFormatter
+from module.Comment import Comment
+import collections
 
 
 class WebScrapper:
@@ -30,6 +32,19 @@ class WebScrapper:
         date = self.soup.find(atr, class_=classAtr).text
         return date
 
+    def get_comments(self):
+        cms = self.soup.find_all("article", class_="comment-body")
+        dic = {}
+        for el in cms:
+            author_name = el.find("b", class_="fn").text
+            content = el.find("div", class_="comment-content").text
+            dic[author_name] = content
+
+        return dic
+
     def delete_elements_by_class(self, atr, classAtt):
         for div in self.soup.find_all(atr, class_=classAtt):
             div.decompose()
+
+
+
