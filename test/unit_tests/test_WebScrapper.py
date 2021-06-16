@@ -18,8 +18,8 @@ def test_main_Page_soup(webScrapperDemo):
     assert webScrapperDemo.soup.text == ws.soup.text
 
 
-def test_get_articles_urls(urls_list, webScrapperDemo):
-    articlesUrls = webScrapperDemo.get_articles_urls(atr='a', classAtr='more-link', articlesNeeded=3)
+def test_get_articles_urls_from_page(urls_list, webScrapperDemo):
+    articlesUrls = webScrapperDemo.test_get_articles_urls_from_page(atr='a', classAtr='more-link', articlesNeeded=3)
     assert collections.Counter(urls_list) == collections.Counter(articlesUrls)
 
 
@@ -51,3 +51,10 @@ def test_get_date():
     ws = WebScrapper("https://blog.bozho.net/blog/3733")
     ws.makeSoup()
     assert date == ws.get_date("time", "entry-date published updated")
+
+
+def test_get_all_articles_urls(article_urls):
+    articlesUrls = WebScrapper.get_all_articles_urls(neededURLS=20)
+    assert collections.Counter(articlesUrls) == collections.Counter(articlesUrls)
+
+

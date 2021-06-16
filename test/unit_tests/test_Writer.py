@@ -1,7 +1,6 @@
 import pytest
 from module.writer import Writer
-import codecs
-import json
+
 import collections
 
 

@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 from module.data_formatter import DataFormatter
 from module.Article import Article
-from module.Comment import Comment
 import collections
 
 
@@ -16,7 +15,7 @@ class WebScrapper:
         soup = BeautifulSoup(html, "lxml")
         self.soup = soup
 
-    def get_articles_urls(self, atr, classAtr, articlesNeeded):
+    def test_get_articles_urls_from_page(self, atr, classAtr, articlesNeeded):
         lis = self.soup.find_all(atr, class_=classAtr)[:articlesNeeded]
         urls = [el["href"] for el in lis]
         return urls
@@ -55,7 +54,7 @@ class WebScrapper:
             web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
             web_scrapper.makeSoup()
             articlesNeeded = neededURLS - len(articlesUrls)
-            lis = web_scrapper.get_articles_urls("a", "more-link", articlesNeeded)
+            lis = web_scrapper.test_get_articles_urls_from_page("a", "more-link", articlesNeeded)
             articlesUrls.extend(lis)
             page += 1
         return articlesUrls

@@ -8,7 +8,10 @@ NOTE: This file is automatically included when running pytest.
 import os
 import sys
 import pytest
+import codecs
+import json
 from bs4 import BeautifulSoup
+from module.writer import Writer
 
 # allow the contents to be found automatically as if we were in that directory
 sys.path.append(
@@ -16,6 +19,16 @@ sys.path.append(
 )
 
 from module.web_scraper import WebScrapper
+
+
+@pytest.fixture()
+def writerDemo():
+    FILENAME = "H:/Python/PyTest/Demo/test/unit_tests/test_files/testWriter.csv"
+    ENCODING = 'utf-16'
+    with codecs.open(FILENAME, "w", ENCODING) as fp:
+        writer = Writer(fp)
+        return writer
+
 
 @pytest.fixture()
 def localFirstArticleSoup():
@@ -48,3 +61,14 @@ def urls_list():
                 "https://blog.bozho.net/blog/3722"]
     return urlsList
 
+
+@pytest.fixture()
+def article_urls():
+    lis = ['https://blog.bozho.net/blog/3733', 'https://blog.bozho.net/blog/3728', 'https://blog.bozho.net/blog/3722',
+           'https://blog.bozho.net/blog/3718', 'https://blog.bozho.net/blog/3714', 'https://blog.bozho.net/blog/3704',
+           'https://blog.bozho.net/blog/3691', 'https://blog.bozho.net/blog/3687', 'https://blog.bozho.net/blog/3682',
+           'https://blog.bozho.net/blog/3677', 'https://blog.bozho.net/blog/3673', 'https://blog.bozho.net/blog/3669',
+           'https://blog.bozho.net/blog/3664', 'https://blog.bozho.net/blog/3659', 'https://blog.bozho.net/blog/3653',
+           'https://blog.bozho.net/blog/3647', 'https://blog.bozho.net/blog/3644', 'https://blog.bozho.net/blog/3634',
+           'https://blog.bozho.net/blog/3627', 'https://blog.bozho.net/blog/3618']
+    return lis
