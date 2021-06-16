@@ -20,7 +20,7 @@ def main():  # pragma: no cover
         writer = Writer(fp)
         articlesUrls = WebScrapper.get_all_articles_urls(neededURLS=articlesNeeded)
         articlesList = WebScrapper.get_all_articles(articlesUrls)
-        writer.writeRowToFile(articlesList)
+        writer.write(articlesList)
 
     fp.close()
 
