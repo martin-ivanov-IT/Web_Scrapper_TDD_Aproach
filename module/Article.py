@@ -5,7 +5,7 @@ class Article:
         self.date = date
         self.content = content
         self.comments = comments
-        self.most_used_word = None
+        self.most_used_words = None
 
     def set_most_used_words(self):
         wordcount = {}
@@ -33,13 +33,13 @@ class Article:
                 wordcount[word] += 1
 
         word_counter = collections.Counter(wordcount)
-        self.most_used_word = dict(word_counter.most_common(3))
+        self.most_used_words = dict(word_counter.most_common(3))
 
     def set_content_to_first_three_paragraphs(self):
-        str1 = self.content.replace("\n\n", "\n")
-        str = str1.split('\n')[:4]
+        content_modified = self.content.replace("\n\n", "\n")
+        content_modified  = content_modified .split('\n')[:4]
         separator = '\n'
-        self.content = separator.join(str)
+        self.content = separator.join(content_modified)
 
 
 

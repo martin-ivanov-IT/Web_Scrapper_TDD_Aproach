@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from module.data_formatter import DataFormatter
+from module.Article import Article
 from module.Comment import Comment
 import collections
 
@@ -46,5 +47,33 @@ class WebScrapper:
         for div in self.soup.find_all(atr, class_=classAtt):
             div.decompose()
 
+    @classmethod
+    def get_all_articles_urls(cls, neededURLS):
+        articlesUrls = []
+        page = 1
+        while len(articlesUrls) < neededURLS:
+            web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
+            web_scrapper.makeSoup()
+            articlesNeeded = neededURLS - len(articlesUrls)
+            lis = web_scrapper.get_articles_urls("a", "more-link", articlesNeeded)
+            articlesUrls.extend(lis)
+            page += 1
+        return articlesUrls
 
+    @classmethod
+    def get_all_articles(cls, articlesUrls):
+        articlesList = []
+        for article in articlesUrls:
+            currWS = WebScrapper(article)
+            currWS.makeSoup()
+            currWS.delete_elements_by_class("div", "swp_social_panel")
+            title = currWS.get_title("h1")
+            content = currWS.get_content("div", "entry-content clearfix")
+            date = currWS.get_date("time", "entry-date published updated")
+            cms = currWS.get_comments()
+            currArticle = Article(title, date, content, cms)
+            currArticle.set_most_used_words()
+            currArticle.set_content_to_first_three_paragraphs()
 
+            articlesList.append(currArticle)
+        return articlesList

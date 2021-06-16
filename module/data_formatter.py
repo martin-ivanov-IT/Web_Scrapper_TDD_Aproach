@@ -1,4 +1,5 @@
 import requests
+from requests.exceptions import HTTPError
 import csv
 
 
@@ -8,6 +9,11 @@ class DataFormatter:
         self.url = url
 
     def fetchHtml(self):
-        html = requests.get(self.url)
-        self.html = html
-        return html.text
+        try:
+            html = requests.get(self.url)
+            html.raise_for_status()
+            self.html = html
+            return html.text
+        except HTTPError:
+            print("could not load url")
+            raise HTTPError

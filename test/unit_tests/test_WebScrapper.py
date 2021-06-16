@@ -1,40 +1,7 @@
 import pytest
 from module.web_scraper import WebScrapper
 from bs4 import BeautifulSoup
-from module.Article import Article
 import collections
-
-
-@pytest.fixture()
-def webScrapperDemo():
-    ws = WebScrapper("https://blog.bozho.net/")
-    ws.makeSoup()
-    return ws
-
-
-@pytest.fixture()
-def webFirstArticle():
-    ws = WebScrapper("https://blog.bozho.net/blog/3733")
-    ws.makeSoup()
-    ws.delete_elements_by_class("div", 'swp_social_panel')
-    return ws
-
-
-@pytest.fixture()
-def urls_list():
-    urlsList = ["https://blog.bozho.net/blog/3733", "https://blog.bozho.net/blog/3728",
-                "https://blog.bozho.net/blog/3722"]
-    return urlsList
-
-
-@pytest.fixture()
-def article_obj():
-    title = webFirstArticle.get_title("h1")
-    content = webFirstArticle.get_content("div", "entry-content clearfix")
-    date = webFirstArticle.get_date("time", "entry-date published updated")
-    cms = webFirstArticle.get_comments()
-    article = Article(title, date, content, cms)
-    return article
 
 
 def test_WebScrapperClass(webScrapperDemo):

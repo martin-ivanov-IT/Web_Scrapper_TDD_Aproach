@@ -18,31 +18,9 @@ def main():  # pragma: no cover
         if fp.closed:
             return 1
         writer = Writer(fp)
-        articlesUrls = []
-        while len(articlesUrls) < articlesNeeded:
-            web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
-            web_scrapper.makeSoup()
-            articlesNeeded = articlesNeeded - len(articlesUrls)
-            lis = web_scrapper.get_articles_urls("a", "more-link", articlesNeeded)
-            articlesUrls.extend(lis)
-            page += 1
-
-        articlesLis = []
-        for article in articlesUrls:
-            currWS = WebScrapper(article)
-            currWS.makeSoup()
-            currWS.delete_elements_by_class("div", "swp_social_panel")
-            title = currWS.get_title("h1")
-            content = currWS.get_content("div", "entry-content clearfix")
-            date = currWS.get_date("time", "entry-date published updated")
-            cms = currWS.get_comments()
-            currArticle = Article(title, date, content, cms)
-            currArticle.set_content_to_first_three_paragraphs()
-            currArticle.set_most_used_words()
-
-            articlesLis.append(currArticle)
-
-        writer.writeRowToFile(articlesLis)
+        articlesUrls = WebScrapper.get_all_articles_urls(neededURLS=articlesNeeded)
+        articlesList = WebScrapper.get_all_articles(articlesUrls)
+        writer.writeRowToFile(articlesList)
 
     fp.close()
 
