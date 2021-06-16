@@ -12,7 +12,6 @@ def main():  # pragma: no cover
     FILENAME = "data.json"
     ENCODING = 'utf-16'
     articlesNeeded = 20
-    page = 1
 
     with codecs.open(FILENAME, "w+", ENCODING) as fp:
         if fp.closed:

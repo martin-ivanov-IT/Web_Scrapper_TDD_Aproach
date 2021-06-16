@@ -8,6 +8,7 @@ class DataFormatter:
         self.html = None
         self.url = url
 
+    # fetches the html using requests library and sets the html field to it
     def fetchHtml(self):
         try:
             html = requests.get(self.url)

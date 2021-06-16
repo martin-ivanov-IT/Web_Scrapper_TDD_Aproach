@@ -1,4 +1,6 @@
 import collections
+
+
 class Article:
     def __init__(self, title, date, content, comments):
         self.title = title
@@ -7,6 +9,8 @@ class Article:
         self.comments = comments
         self.most_used_words = None
 
+    # inits the most_used_words  field of the Article class with dictionary
+    # with key(most used word) and value (count)
     def set_most_used_words(self):
         wordcount = {}
         for word in self.content.lower().split():
@@ -37,10 +41,6 @@ class Article:
 
     def set_content_to_first_three_paragraphs(self):
         content_modified = self.content.replace("\n\n", "\n")
-        content_modified  = content_modified .split('\n')[:4]
+        content_modified = content_modified.split('\n')[:4]
         separator = '\n'
         self.content = separator.join(content_modified)
-
-
-
-

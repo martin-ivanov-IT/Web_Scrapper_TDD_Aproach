@@ -11,7 +11,7 @@ import pytest
 import codecs
 import json
 from bs4 import BeautifulSoup
-from module.writer import Writer
+
 
 # allow the contents to be found automatically as if we were in that directory
 sys.path.append(
@@ -19,11 +19,12 @@ sys.path.append(
 )
 
 from module.web_scraper import WebScrapper
+from module.writer import Writer
 
 
 @pytest.fixture()
 def writerDemo():
-    FILENAME = "H:/Python/PyTest/Demo/test/unit_tests/test_files/testWriter.csv"
+    FILENAME = "H:/Python/PyTest/Demo/test/unit_tests/test_files/testWriter.json"
     ENCODING = 'utf-16'
     with codecs.open(FILENAME, "w", ENCODING) as fp:
         writer = Writer(fp)
