@@ -19,7 +19,7 @@ def test_main_Page_soup(webScrapperDemo):
 
 
 def test_get_articles_urls_from_page(urls_list, webScrapperDemo):
-    articlesUrls = webScrapperDemo.test_get_articles_urls_from_page(atr='a', classAtr='more-link', articlesNeeded=3)
+    articlesUrls = webScrapperDemo.get_articles_urls_from_page('a', 'more-link', articlesNeeded=3)
     assert collections.Counter(urls_list) == collections.Counter(articlesUrls)
 
 

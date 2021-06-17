@@ -17,7 +17,7 @@ class WebScrapper:
         self.soup = soup
 
     # get the urls from the loaded page in the soup ant return them in a list
-    def test_get_articles_urls_from_page(self, tag, className, articlesNeeded):
+    def get_articles_urls_from_page(self, tag, className, articlesNeeded):
         lis = self.soup.find_all(tag, class_=className)[:articlesNeeded]
         urls = [el["href"] for el in lis]
         return urls
@@ -59,7 +59,7 @@ class WebScrapper:
             web_scrapper = WebScrapper(f"https://blog.bozho.net/page/{page}")
             web_scrapper.makeSoup()
             articlesNeeded = neededURLS - len(articlesUrls)
-            lis = web_scrapper.test_get_articles_urls_from_page("a", "more-link", articlesNeeded)
+            lis = web_scrapper.get_articles_urls_from_page("a", "more-link", articlesNeeded)
             articlesUrls.extend(lis)
             page += 1
         return articlesUrls

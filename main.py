@@ -18,7 +18,6 @@ def main():  # pragma: no cover
             return 1
         writer = Writer(fp)
         articlesUrls = WebScrapper.get_all_articles_urls(neededURLS=articlesNeeded)
-        print(articlesUrls)
         articlesList = WebScrapper.get_all_articles(articlesUrls)
         writer.write(articlesList)
 
