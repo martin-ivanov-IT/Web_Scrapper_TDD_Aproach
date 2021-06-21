@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+    <div class="row">
+    {% for key, value in article.comments.items %}
+
+        <div class="card m-5" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Author: {{ key }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Date:</h6>
+                <p class="card-text">{{ value }}</p>
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="">Web scrapper</a>
+    <a class="navbar-brand" href="/">Web scrapper</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -35,18 +35,22 @@
         {% block content %}
             <div class="container">
                 <div class="row">
-{#                    <div class="list-group">#}
-{#                        {% for object in articles %}#}
-{#                            <a href="/article/{{ object.id  }}" class="list-group-item list-group-item-action">{{ object.title }}</a>{% if not forloop.last %}{% endif %}#}
-{#                        {% endfor %}#}
-{#                    </div>#}
                     {% for object in articles %}
                     <div class="card m-5" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">{{ object.title  }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Author: Bozho</h6>
-                            <a href="#" class="card-link">Content</a>
-                            <a href="#" class="card-link">Comments</a>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ object.date }}</h6>
+                            <a href="article/content/{{ object.id }}" class="card-link">Content</a>
+                            {% if object.comments_count > 0 %}
+                                <a href="/article/comments/{{ object.id  }}" class="card-link">Comments({{ object.comments_count }})</a>
+                            {% endif %}
+
+                            {% if object.comments_count == 0 %}
+                                <a href="/article/comments/{{ object.id  }}" class="card-link btn disabled" >Comments({{ object.comments_count }})</a>
+                            {% endif %}
+
+
                             <a href="/article/{{ object.id  }}" class="btn btn-primary btn-lg active mt-2">Full article</a> {% if not forloop.last %}{% endif %}
                         </div>
                     </div>

@@ -19,3 +19,11 @@ def get_article_by_id(article_id):
             if article["id"] == article_id:
                 return article
         return None
+
+
+def get_article_content_by_id(article_id):
+    data = get_data()
+    for article in data:
+        if article["id"] == article_id:
+            return article["content"]
+    return None

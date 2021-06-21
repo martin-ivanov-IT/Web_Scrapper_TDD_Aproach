@@ -3,10 +3,17 @@
 {% block content %}
     <div class="container">
         <div class="row justify-content-md-center">
-            <p class="h2">{{ article.title }}</p>
-            <div class="col-md-auto">
-                {{ article.content }}
+            <div class="jumbotron">
+                <h1 class="display-4">{{ article.title }}</h1>
+                <h6 class="card-subtitle mb-2 text-muted">{{ article.date }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Author Bozho</h6>
+                <p class="lead"> {{ article.full_content }}</p>
+                <hr class="my-4">
             </div>
+{#            <p class="h2"></p>#}
+{#            <div class="col-md-auto">#}
+{#                {{ article.content }}#}
+{#            </div>#}
         </div>
     </div>
 {% endblock %}

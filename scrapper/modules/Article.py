@@ -6,9 +6,11 @@ class Article:
         self.title = title
         self.date = date
         self.content = content
+        self.full_content = content
         self.comments = comments
         self.id = id
         self.most_used_words = None
+        self.comments_count = len(self.comments)
 
     # inits the most_used_words  field of the Article class with dictionary
     # with key(most used word) and value (count)
