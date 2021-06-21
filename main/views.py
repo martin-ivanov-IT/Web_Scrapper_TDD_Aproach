@@ -2,15 +2,19 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from scrapper import custom_service
 from scrapper import main
+from django.core.paginator import Paginator
 
 main.main()
 
 
 # Create your views here.
-def index(response):
+def index(request):
     with open("../scrapper/data.json", encoding='utf-16', errors='ignore') as json_data:
         articles = custom_service.get_data()
-    return render(response, "main/base.html", {"articles": articles})
+    paginator = Paginator(articles, 5)
+    page = request.GET.get('page', 1)
+    articles = paginator.page(page)
+    return render(request, "main/base.html", {"articles": articles})
 
 
 def home(response):

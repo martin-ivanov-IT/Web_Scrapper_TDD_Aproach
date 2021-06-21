@@ -43,6 +43,7 @@ class WebScrapper:
             content = el.find("div", class_="comment-content").text
             dic[author_name] = content
 
+        dic = dict(sorted(dic.items(), key=lambda x: x[0].lower()))
         return dic
 
     # deletes all elements from the soup with given tag and className
