@@ -1,21 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from scrapper import article_service
-from scrapper import main
 from django.core.paginator import Paginator
+from scrapper.main import main
+
+main()
 
 
-# Create your views here.
 def index(request):
     articles = article_service.get_data()
     paginator = Paginator(articles, 5)
     page = request.GET.get('page', 1)
     articles = paginator.page(page)
     return render(request, "main/base.html", {"articles": articles})
-
-
-def home(response):
-    return render(response, "main/home.html", {})
 
 
 def article_by_id(response, article_id):
@@ -40,5 +36,3 @@ def content_by_article_id(response, article_id):
 def most_used_words_by_article_id(response, article_id):
     most_used_words = article_service.get_most_used_words_by_id(article_id)
     return render(response, "main/most_used_words_by_article_id.html", {"most_used_words": most_used_words})
-
-
