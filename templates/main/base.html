@@ -33,22 +33,22 @@
             <div class="container">
                 <div class="row">
                     {% for object in articles %}
-                    <div class="card m-5" style="width: 18rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ object.title  }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">Author: Bozho</h6>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ object.date }}</h6>
-                            <a href="article/content/{{ object.id }}" class="card-link">Content</a>
-                            {% if object.comments_count > 0 %}
-                                <a href="/article/comments/{{ object.id  }}" class="card-link">Comments({{ object.comments_count }})</a>
-                            {% endif %}
+                        <div class="card m-5" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ object.title  }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">{{ object.date }}</h6>
+                                <a href="article/most_used_words/{{ object.id }}" class="link m-3" >Most used words</a>
+                                <a href="article/content/{{ object.id }}" class="link m-3">Content</a>
+                                {% if object.comments_count > 0 %}
+                                    <a href="/article/comments/{{ object.id  }}" class="link m-3">Comments({{ object.comments_count }})</a>
+                                {% endif %}
 
-                            {% if object.comments_count == 0 %}
-                                <a href="/article/comments/{{ object.id  }}" class="card-link btn disabled" >Comments({{ object.comments_count }})</a>
-                            {% endif %}
-                            <a href="/article/{{ object.id  }}" class="btn btn-primary btn-lg active mt-2">Full article</a> {% if not forloop.last %}{% endif %}
+                                {% if not object.comments_count %}
+                                    <a href="/article/comments/{{ object.id  }}" class="link btn disabled" class="m-3">Comments({{ 0 }})</a>
+                                {% endif %}
+                                <a href="/article/{{ object.id  }}" class="btn btn-primary btn-lg active m-3">Full article</a> {% if not forloop.last %}{% endif %}
+                            </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>

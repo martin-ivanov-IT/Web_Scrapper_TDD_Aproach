@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for key, value in most_used_words.items %}
+
+                <div class="card m-5" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Word: {{ key }}</h5>
+                        <p class="card-text">{{ value }}</p>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

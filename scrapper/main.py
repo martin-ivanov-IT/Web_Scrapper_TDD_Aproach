@@ -1,11 +1,11 @@
 from scrapper.modules.web_scraper import WebScrapper
 from scrapper.modules.writer import Writer
-from scrapper.custom_service import get_data
+from scrapper.article_service import get_data
 import codecs
 
 
 def main():  # pragma: no cover
-    FILENAME = "../data.json"
+    FILENAME = "data.json"
     ENCODING = 'utf-16'
     articlesNeeded = 20
 
