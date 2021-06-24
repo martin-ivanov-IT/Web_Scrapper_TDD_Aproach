@@ -5,6 +5,7 @@ import codecs
 
 
 def main():  # pragma: no cover
+
     FILENAME = "data.json"
     ENCODING = 'utf-16'
     articlesNeeded = 20

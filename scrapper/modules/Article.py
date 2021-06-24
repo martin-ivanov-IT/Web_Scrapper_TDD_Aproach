@@ -3,6 +3,19 @@ import collections
 
 class Article:
     def __init__(self, title, date, content, comments, id):
+        """
+
+        @param title:
+        @type title:
+        @param date:
+        @type date:
+        @param content:
+        @type content:
+        @param comments:
+        @type comments:
+        @param id:
+        @type id:
+        """
         self.title = title
         self.date = date
         self.content = content
@@ -12,9 +25,11 @@ class Article:
         self.most_used_words = None
         self.comments_count = len(self.comments)
 
-    # inits the most_used_words  field of the Article class with dictionary
-    # with key(most used word) and value (count)
     def set_most_used_words(self):
+        """
+        inits the most_used_words  field of the Article class with dictionary
+        with key(most used word) and value (count)
+        """
         wordcount = {}
         for word in self.content.lower().split():
             word = word.replace(".", "")

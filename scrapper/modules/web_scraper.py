@@ -6,36 +6,82 @@ import collections
 
 class WebScrapper:
     def __init__(self, url):
+        """
+
+        @param url:
+        @type url:
+        """
         self.url = url
         self.soup = None
 
-    # inits soup with the html from data formatter instance and sets the soup field with the fetched soup
     def makeSoup(self):
+        """
+        inits soup with the html from data formatter instance and sets the soup field with the fetched soup
+        """
         df = DataFormatter(self.url)
         html = df.fetchHtml()
         soup = BeautifulSoup(html, "lxml")
         self.soup = soup
 
-    # get the urls from the loaded page in the soup ant return them in a list
     def get_articles_urls_from_page(self, tag, className, articlesNeeded):
+        """
+        get the urls from the loaded page in the soup ant return them in a list
+        @param tag:
+        @type tag:
+        @param className:
+        @type className:
+        @param articlesNeeded:
+        @type articlesNeeded:
+        @return:
+        @rtype: list
+        """
         lis = self.soup.find_all(tag, class_=className)[:articlesNeeded]
         urls = [el["href"] for el in lis]
         return urls
 
     def get_content(self, tag, className):
+        """
+
+        @param tag:
+        @type tag:
+        @param className:
+        @type className:
+        @return:
+        @rtype: str
+        """
         text = self.soup.find(tag, class_=className).get_text()
         return text
 
     def get_title(self, tag):
+        """
+
+        @param tag:
+        @type tag:
+        @return:
+        @rtype: str
+        """
         title = self.soup.find(tag).text
         return title
 
     def get_date(self, tag, className):
+        """
+
+        @param tag:
+        @type tag:
+        @param className:
+        @type className:
+        @return:
+        @rtype: str
+        """
         date = self.soup.find(tag, class_=className).text
         return date
 
-    # return dictionary with all comments key(author) value(comment)
     def get_comments(self):
+        """
+        return dictionary with all comments key(author) value(comment)
+        @return:
+        @rtype: dict
+        """
         cms = self.soup.find_all("article", class_="comment-body")
         dic = {}
         for el in cms:
@@ -46,14 +92,26 @@ class WebScrapper:
         dic = dict(sorted(dic.items(), key=lambda x: x[0].lower()))
         return dic
 
-    # deletes all elements from the soup with given tag and className
     def delete_elements_by_class(self, tag, className):
+        """
+        deletes all elements from the soup with given tag and className
+        @param tag:
+        @type tag:
+        @param className:
+        @type className:
+        """
         for div in self.soup.find_all(tag, class_=className):
             div.decompose()
 
-    # returns list of urls iterating through the pages until needed count of urls
     @classmethod
     def get_all_articles_urls(cls, neededURLS):
+        """
+        returns list of urls iterating through the pages until needed count of urls
+        @param neededURLS:
+        @type neededURLS:
+        @return:
+        @rtype:list
+        """
         articlesUrls = []
         page = 1
         while len(articlesUrls) < neededURLS:
@@ -65,9 +123,15 @@ class WebScrapper:
             page += 1
         return articlesUrls
 
-    # returns Article list filled with the whole articles content
     @classmethod
     def get_all_articles(cls, articlesUrls):
+        """
+        returns Article list filled with the whole articles content
+        @param articlesUrls:
+        @type articlesUrls:
+        @return:
+        @rtype: list
+        """
         articlesList = []
         id = 0
         for article in articlesUrls:
